@@ -26,17 +26,19 @@ public class ExcportExcel1 {
 		
 		List<RoomBooking> rBookings = new ArrayList<RoomBooking>();
 		
-		for(int i=1 ; i <= 4 ; i++){	
-			RoomBooking rBooking = new RoomBooking();
-			if(i <= 2){
+		for(int i=1 ; i <= 10 ; i++){	
+			
+			if(i <= 5){
+				RoomBooking rBooking = new RoomBooking();
 				rBooking.setName("ห้องประชุม 1");
 				rBooking.setSubject("Angular");
 				rBooking.setStartDate("11-03-2561");
 				rBooking.setStartTime("11.00");
 				rBooking.setCreateUserName("สุขสวัสดิ์");
 				rBooking.setUserBookName("พี่โอ๋");
-				
+				rBookings.add(rBooking);
 			}else{
+				RoomBooking rBooking = new RoomBooking();
 				rBooking.setName("ห้องประชุม 2");
 				rBooking.setSubject("Java");
 				rBooking.setStartDate("12-05-2561");
@@ -45,12 +47,14 @@ public class ExcportExcel1 {
 				rBooking.setUserBookName("พี่เต๋า");
 				rBookings.add(rBooking);
 			}
-			rBookings.add(rBooking);
 		}
 		roomBookings = rBookings;
 	}
 	
 	
+	/**
+	 * 
+	 */
 	public static void exportExcel(){
 		// Create Excel -----------------------------------------------------------------
 		XSSFWorkbook workbook = new XSSFWorkbook(); 
@@ -219,18 +223,19 @@ public class ExcportExcel1 {
 					String val = typeRooms.get(key); // Value
 					int j = 0 ;
 					for(RoomBooking rBooking : roomBookings){
-						if(val == rBooking.getName()){
+						if(val == rBooking.getName() && val.endsWith(rBooking.getName())){
 							
 							j += 1;
 							row = spreadsheet.createRow((short) i);
 							
-							if(j < 2){
+//							if(j < 2){
+								System.out.println(rBooking.getName() + " j = " + j);
 								cell = (XSSFCell) row.createCell((short) 0);
 							    cell.setCellValue(i - 4);
 							    
 							    cell = (XSSFCell) row.createCell((short) 1);
 							    cell.setCellValue(val);
-							}
+//							}
 							
 						    cell = (XSSFCell) row.createCell((short) 2);
 						    cell.setCellValue(rBooking.getStartDate());
@@ -285,9 +290,7 @@ public class ExcportExcel1 {
 			
 			if(typeRooms.size() == 0){
 				typeRooms.put(String.valueOf(i) , newType);
-				System.out.println("typeRooms == 0");
 			}else{
-				System.out.println("typeRooms != 0");
 				boolean num = false;
 				
 				Iterator<String> Vmap = typeRooms.keySet().iterator();
@@ -310,6 +313,13 @@ public class ExcportExcel1 {
 			String key = (String)(Vmap.next());  // Key
 			String val = typeRooms.get(key); // Value
 			System.out.println("ห้องประชุม --> " + val);
+		}
+		System.out.println("================================");
+		
+		for(RoomBooking rBooking : roomBookings){
+			System.out.println("Name : " + rBooking.getName());
+			System.out.println("StartDate : " + rBooking.getStartDate());
+			System.out.println("================================");
 		}
 		
 		exportExcel();
