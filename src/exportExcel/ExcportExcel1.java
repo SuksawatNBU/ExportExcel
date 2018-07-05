@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
@@ -22,6 +21,7 @@ public class ExcportExcel1 {
 	static RoomBooking roomBooking;
 	static List<RoomBooking> roomBookings;
 	static HashMap<String,String> typeRooms;
+	private static XSSFWorkbook workbook;
 	
 	public static void addRoomBooking(){
 		
@@ -54,8 +54,7 @@ public class ExcportExcel1 {
 	
 	
 	public static void exportExcel(){
-		// Create Excel -----------------------------------------------------------------
-		XSSFWorkbook workbook = new XSSFWorkbook(); 
+		workbook = new XSSFWorkbook(); 
 		XSSFSheet spreadsheet = workbook.createSheet("รายงานการใช้งานห้องประชุม");
 		XSSFRow row;
 		XSSFCell cell;
