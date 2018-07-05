@@ -10,7 +10,7 @@ public class DemoTime {
 	static int Time = 0;
 
 	public static void main(String[] args) {
-		String time = "09:15 - 12:43";
+		String time = "09:15 - 12:4";
 		diffTime(time);
 	}
 	
@@ -24,8 +24,9 @@ public class DemoTime {
 			long diff = end.getTime() - start.getTime();
 			int hourDiff = (int) (diff / (60 * 60 * 1000) % 24);
 			int minuteDiff = (int) (diff / (60 * 1000) % 60);
-			time = String.valueOf(hourDiff) + ":" + String.valueOf(minuteDiff);
 			Time += minuteDiff + (hourDiff*60);
+			time = String.valueOf(hourDiff) + ":" + String.valueOf(minuteDiff);
+			System.out.println("ชั่วโมง : "+time);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
