@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
@@ -153,7 +154,12 @@ public class ExcportExcel1 {
 			    cell.setCellValue("วันที่พิมพ์ : " + currentDate);
 			    cell.setCellStyle(stylePrintDate);
 			    
+			    cell = (XSSFCell) row.createCell((short) 4);
+			    XSSFRichTextString s1 = new XSSFRichTextString("ผู้พิมพ์ : ");
+			    cell.setCellValue(s1 + "sdsd");
+			  
 			    cell = (XSSFCell) row.createCell((short) 6);
+			    cell.setCellValue("");
 			    cell.setCellValue("ผู้พิมพ์ : ");
 			    cell.setCellStyle(stylePrintDate2);
 			    
@@ -181,6 +187,7 @@ public class ExcportExcel1 {
 //			    styleHead.setBorderBottom(XSSFCellStyle.BORDER_DOUBLE);
 //			    styleHead.setBorderLeft(XSSFCellStyle.BORDER_THIN);
 //			    styleHead.setBorderRight(XSSFCellStyle.BORDER_THIN);
+			    styleHead.setWrapText(true);
 			    
 			    styleHead.setFont(fontHead);
 			    
@@ -213,26 +220,29 @@ public class ExcportExcel1 {
 			    cell.setCellStyle(styleHead);
 			    
 			    // ข้อมูล ----------------------------------------------------------------------------
-				int i = 5;
+				int i = 5; // ลำดับ row
+				int numType = 1; // ลำดับห้องประชุม
+				
 			    Iterator<String> Vmap = typeRooms.keySet().iterator();
 				while(Vmap.hasNext()){
+					
 					String key = (String)(Vmap.next());  // Key
 					String val = typeRooms.get(key); // Value
-					int j = 0 ;
+					
+					boolean typeShow = true;
+					
 					for(RoomBooking rBooking : roomBookings){
+						
 						if(val == rBooking.getName() && val.endsWith(rBooking.getName())){
-							
-							j += 1;
 							row = spreadsheet.createRow((short) i);
 							
-//							if(j < 2){
-								System.out.println(rBooking.getName() + " j = " + j);
+							if(typeShow == true){
 								cell = (XSSFCell) row.createCell((short) 0);
-							    cell.setCellValue(i - 4);
+							    cell.setCellValue(numType);
 							    
 							    cell = (XSSFCell) row.createCell((short) 1);
 							    cell.setCellValue(val);
-//							}
+							}
 							
 						    cell = (XSSFCell) row.createCell((short) 2);
 						    cell.setCellValue(rBooking.getStartDate());
@@ -248,15 +258,18 @@ public class ExcportExcel1 {
 						    
 						    cell = (XSSFCell) row.createCell((short) 6);
 						    cell.setCellValue(rBooking.getUserBookName());
+						    
+						    i++;
+						    typeShow = false;
 						}
 					}
-					i++;
+					numType++;
 				}
 			    
 			    // OutPut ----------------------------------------------------------------------------
 			    FileOutputStream output = null;
 			    try {
-			    	output = new FileOutputStream(new File("C:\\Users\\Suksawat\\Desktop\\MRBDEV.xlsx"));
+			    	output = new FileOutputStream(new File("C:\\poi\\MRBDEV2.xlsx"));
 			    	workbook.write(output);
 			    }
 			    catch (IOException e) {
@@ -305,11 +318,11 @@ public class ExcportExcel1 {
 			}
 			i++;
 		}
-		Iterator<String> Vmap = typeRooms.keySet().iterator();
+		/*Iterator<String> Vmap = typeRooms.keySet().iterator();
 		while(Vmap.hasNext()){
 			String key = (String)(Vmap.next());  // Key
 			String val = typeRooms.get(key); // Value
-			System.out.println("ห้องประชุม --> " + val);
+			System.out.println("ห้องประชุม : " + val);
 		}
 		System.out.println("================================");
 		
@@ -318,9 +331,10 @@ public class ExcportExcel1 {
 			System.out.println("Subject : " + rBooking.getSubject());
 			System.out.println("StartDate : " + rBooking.getStartDate());
 			System.out.println("================================");
-		}
+		}*/
 		
 		// Export
 		exportExcel();
+		System.out.println("End ================================");
 	}
 }
