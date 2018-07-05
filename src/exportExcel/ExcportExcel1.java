@@ -31,7 +31,7 @@ public class ExcportExcel1 {
 			if(i <= 5){
 				RoomBooking rBooking = new RoomBooking();
 				rBooking.setName("ห้องประชุม 1");
-				rBooking.setSubject("Angular");
+				rBooking.setSubject("Angular" + i);
 				rBooking.setStartDate("11-03-2561");
 				rBooking.setStartTime("11.00");
 				rBooking.setCreateUserName("สุขสวัสดิ์");
@@ -40,7 +40,7 @@ public class ExcportExcel1 {
 			}else{
 				RoomBooking rBooking = new RoomBooking();
 				rBooking.setName("ห้องประชุม 2");
-				rBooking.setSubject("Java");
+				rBooking.setSubject("Java" + (i - 5));
 				rBooking.setStartDate("12-05-2561");
 				rBooking.setStartTime("09.00");
 				rBooking.setCreateUserName("สุขสวัสดิ์");
@@ -52,9 +52,6 @@ public class ExcportExcel1 {
 	}
 	
 	
-	/**
-	 * 
-	 */
 	public static void exportExcel(){
 		// Create Excel -----------------------------------------------------------------
 		XSSFWorkbook workbook = new XSSFWorkbook(); 
@@ -318,15 +315,12 @@ public class ExcportExcel1 {
 		
 		for(RoomBooking rBooking : roomBookings){
 			System.out.println("Name : " + rBooking.getName());
+			System.out.println("Subject : " + rBooking.getSubject());
 			System.out.println("StartDate : " + rBooking.getStartDate());
 			System.out.println("================================");
 		}
 		
+		// Export
 		exportExcel();
-		
-		
-		
-
 	}
-
 }
